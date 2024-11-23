@@ -1,0 +1,82 @@
+// # Building a Node Express Web App
+// ## App Setup
+// 1. Create new folder
+// 2. make that folder its own workspace
+// 3. Open terminal, CD to Directory->   run npm init
+// 4. Keep most of the options the same through until it asks for YES, then hit enter to create folder.
+// 5. create index.js (or whatever you named it in npm init - default is index.js)
+// 6. IN FOLDER, npm install --save express
+// 7. run npm install --save knex
+// 8. run npm install --save pg
+// 9. run npm install --save ejs
+// 10. begin with this: 
+//     > let express = require('express'); \
+//     >let app = express();\
+//     >let path = require('path'); \
+//     \
+//     >app.use(express.urlencoded( {extended: true} ));\
+//     \
+//     // -----> Connect Database here\
+//     \
+//     >app.set("views", path.join(__dirname, "views"));\
+//     >app.set("view engine", "ejs");\
+//     // -----> put all routes below\
+//     \
+//     >app.get("/", (req,res) => res.render("index", {data: "ABC Emps"})) \
+//     \
+//     app.listen(3000, () => console.log('server started'));
+// 11. to run it, run node <entry point file (ex. 'index.js')>
+// 12. In browser, localhost:3000/
+// # Lets Break it Down
+// # *Initialize*
+// ## Bring in Libraries
+// [line 1] This set pulls in the express library.\
+// [line 2] Creates an express object and assigns it to 'app'\
+// [line 3] Pulls in the path from your machine.
+// >let express = require('express'); \
+//     >let app = express();\
+//     >let path = require('path');
+// ## Add URLencoded:
+// grab html form from file and allows to pull JSON data from form
+// > app.use(express.urlencoded( {extended: true} ));
+// ## Set up Views:
+// Tells ejs which directory to look for all the views in. The second 'views' is the name of the directory if you decide not to use 'views.' [line 2] tells the app to use ejs for rendering.
+// >app.set("views", path.join(__dirname, "views"));\
+//     >app.set("view engine", "ejs");\
+// ## Connect to Database
+// 1. Ensure the 'host' is the host for your server and the other info is all up to date with YOUR database. Double check ports.
+//     > const knex = require("knex") ({ \
+//         client : "pg", \
+//         connection : { \
+//             host : "localhost", \
+//             user : "postgres", \
+//             password : "admin", \
+//             database : "myCompany",\ 
+//             port : 5432}\
+//         })\
+// 2. Restart terminal <br>
+//     > CNTL C > Node index.js
+// # *Routes*
+// Create as many routes as you need
+// ## Add GET request
+// 1. use res.render() to display a page.
+//   * res.render("filename [no .ejs]", { ejs variable name : db value})
+//     > app.get("/", (req,res) => {
+//   res.render("index", {data: "ABC Emps"})
+//     });
+// ## Add POST command
+// 1. Add this to your index.js <br> 
+//     > app.post ("form_name_from_HTML_file", (req,res) => res.send(req.body));
+//     Or to pull from a Database:
+//     >  app.post("/showEmps", (req, res) => {
+//         let sJobCode = req.body.job_code;\
+//         knex.select().from('employees').where('job_code', sJobCode).then( emps => { \
+//         res.render("displayEmps", { myemps: emps });
+//         })\
+//         })\
+// 2. Restart terminal <br>
+//    > CNTL C > Node index.js
+// # *Listen*
+//  Keep app.listen() at bottom of file!\
+// listens to a port for activity. use app.listen(port number, (parameters) => what you want it to do.)
+// > app.listen(3000, () => console.log('server started'));

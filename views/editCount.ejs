@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Country</title>
+        <style>
+        form {
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #F9F9F9;
+            font-size: 12px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45A049;
+        }
+        </style>
+    </head>
+    <body>
+        <h1 style="text-align: center;">Edit Country</h1>
+        <!-- pass this with the route -->
+        <form action="/editCount/<%= country.id %>" method="POST">
+        <!-- Pokémon Description -->
+        <label for="country_name">country_name</label>
+        <input type="text" id="country_name" name="country_name" value="<%= country.country_name %>" required oninput="this.value = this.value.toUpperCase()">
+        <!-- Base Total -->
+        <label for="popular_site">popular_site</label>
+        <input type="text" id="popular_site" name="popular_site" value="<%= country.popular_site %>" required>
+        <!-- Date Created -->
+        <label for="capital">capital</label>
+        <input type="text" id="capital" name="capital" value="<%= country.capital %>" required>
+        <label for="population">population</label>
+        <input type="text" id="population" name="population" value="<%= country.population %>" required>
+        <!-- Active Pokémon (Checkbox) -->
+        <label for="visited">
+            <input type="checkbox" id="visited" name="visited" <%= country.visited === "y" ? 'checked' : '' %>>
+            visited
+        </label>
+        <!-- Submit Button -->
+        <button type="submit">Save Changes</button>
+        </form>
+    </body>
+</html>
